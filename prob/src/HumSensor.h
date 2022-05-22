@@ -9,7 +9,7 @@ class HumSensor
     void writeLow(int holdFor);
     void writeHigh(int holdFor);
     void awaitResponse();
-    bool readBit();
+    unsigned long readBit();
     void readData();
 
     public:
