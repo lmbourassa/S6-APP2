@@ -7,7 +7,6 @@ class HumSensor
     int pin;
     float humData, tempData;
     void writeLow(int holdFor);
-    void writeHigh(int holdFor);
     void awaitResponse();
     unsigned long readBit();
     void readData();

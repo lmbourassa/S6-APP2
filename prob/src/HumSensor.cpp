@@ -11,45 +11,14 @@ void HumSensor::writeLow(int holdFor)
     delayMicroseconds(holdFor);
 }
 
-void HumSensor::writeHigh(int holdFor)
-{
-    // Serial.println("writeHigh");
-    pinMode(pin, INPUT_PULLUP);
-    delayMicroseconds(holdFor);
-}
-
 void HumSensor::awaitResponse()
 {
-    // Serial.println("awaitResponse");
-    pinMode(pin, INPUT_PULLUP);
-    delayMicroseconds(10);
-
-    while(!digitalRead(pin));
-    while(digitalRead(pin));
+    pulseIn(pin, HIGH);
 }
 
 unsigned long HumSensor::readBit()
 {
-    // Serial.println("readBit");
-    unsigned long bitStart, bitEnd;
-
-    pinMode(pin, INPUT_PULLUP);
-
-    delayMicroseconds(20);
-
-    while(!digitalRead(pin))
-    {
-        delayMicroseconds(10);
-    }
-
-    bitStart = micros();
-    while(digitalRead(pin))
-    {
-        delayMicroseconds(10);
-    }
-    bitEnd = micros();
-
-    return bitEnd - bitStart;
+    return pulseIn(pin, HIGH);
 }
 
 void HumSensor::readData()
@@ -60,7 +29,7 @@ void HumSensor::readData()
     noInterrupts();
 
     writeLow(20000);
-    writeHigh(40);
+    pinMode(pin, INPUT_PULLUP);
     awaitResponse();
 
     for(int i = 0; i < 40; i++)
@@ -75,11 +44,10 @@ void HumSensor::readData()
 
     for(int i = 0; i < 40; i++)
     {
-        if((bitTimes[i] > 24) && (bitTimes[i] < 30))
+        if((bitTimes[i] < 30))
         {
             bits[i] = 0;
         }
-
         else
         {
             bits[i] = 1;

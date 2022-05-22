@@ -10,6 +10,22 @@ void BarSensor::setBackgroundMode()
     Wire.endTransmission();
 }
 
+void BarSensor::setPressureMode()
+{
+    Wire.beginTransmission(addr);
+    Wire.write(0x06);
+    Wire.write(0x00);
+    Wire.endTransmission();
+}
+
+void BarSensor::setTemperatureMode()
+{
+    Wire.beginTransmission(addr);
+    Wire.write(0x07);
+    Wire.write(0x00);
+    Wire.endTransmission();
+}
+
 void BarSensor::readCoefs()
 {
     int coefs[18];
@@ -30,7 +46,7 @@ void BarSensor::readCoefs()
     c0 = (coefs[0] << 4) | (coefs[1] >> 4);
     c1 = ((coefs[1] | 0x0F) << 8) | coefs[2];
     c00 = (coefs[3] << 12) | (coefs[4] << 4) | (coefs[5] >> 4);
-    c10 = ((coefs[5] | 0x0F) << 16) | (coefs[6] <<8 ) | coefs[7];
+    c10 = ((coefs[5] | 0x0F) << 16) | (coefs[6] << 8) | coefs[7];
     c01 = (coefs[8] << 8) | coefs[9];
     c11 = (coefs[10] << 8) | coefs[11];
     c20 = (coefs[12] << 8) | coefs[13];
@@ -92,18 +108,18 @@ void BarSensor::readData()
     // tempData = temp ^ -1;
 }
 
-long int BarSensor::extend(long int data, long int mask)
+long BarSensor::extend(long data, long mask)
 {
     if(mask == 0x00)
     {
-        return 0;
+        return data;
     }
 
-    // Serial.printlnf("Data: 0x%lX, mask: 0x%lX", data, mask);
+    Serial.printlnf("Data: 0x%lX, mask: 0x%lX", data, mask);
 
     if((data & mask) == mask)
     {
-        long int e = 0x80000000;
+        long e = 0x80000000;
         while((e & mask) != mask)
         {
             data |= e;
@@ -111,7 +127,7 @@ long int BarSensor::extend(long int data, long int mask)
         }
     }
 
-    // Serial.printlnf("Extended: 0x%lX", data);
+    Serial.printlnf("Extended: 0x%lX = %ld", data, data);
 
     return data;
 }
@@ -125,6 +141,8 @@ BarSensor::BarSensor(int addr, long int k)
 void BarSensor::init()
 {
     setBackgroundMode();
+    setPressureMode();
+    setTemperatureMode();
     readCoefs();
 }
 
