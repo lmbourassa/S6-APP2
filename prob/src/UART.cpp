@@ -7,9 +7,10 @@ void UART::sendData()
     Serial1.write((byte*)&data, sizeof(Data));
 }
 
-UART::UART(bool mode)
+UART::UART(bool mode, Data* data)
 {
     this->mode = mode;
+    this->data = data;
     Serial1.begin(9600);
 }
 
@@ -39,8 +40,10 @@ void UART::requestData()
     data->rainData = tempData->rainData;
 }
 
-void UART::checkRequest()
+bool UART::checkRequest()
 {
+    bool ret = false;
+
     if (Serial1.available())
     {
         int inByte = Serial1.read();
@@ -49,5 +52,9 @@ void UART::checkRequest()
         {
             sendData();
         }
+
+        ret = true;
     }
+
+    return ret;
 }

@@ -3,7 +3,7 @@
 
 struct Data
 {
-    float lightData;
+    int lightData;
     float barPresData;
     float barTempData;
     float humData;
@@ -21,9 +21,9 @@ class UART
     void sendData();
     
     public:
-    UART(bool mode);
+    UART(bool mode, Data* data);
     void requestData();
-    void checkRequest();
+    bool checkRequest();
 };
 
 #endif
