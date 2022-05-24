@@ -16,7 +16,7 @@
 
 SYSTEM_THREAD(ENABLED);
 
-#if MODE == MASTER
+#if MODE == SLAVE
   LightSensor lightSensor(A0);
   BarSensor barSensor(0x77, 524288);
   HumSensor humSensor(D4);
@@ -29,14 +29,14 @@ void setup() {
   waitFor(Serial.isConnected, 30000);
   delay(2000);
 
-#if MODE == MASTER
+#if MODE == SLAVE
   Wire.begin();
   barSensor.init();
 #endif
 }
 
 void loop() {
-#if MODE == MASTER
+#if MODE == SLAVE
   Serial.printlnf("Light: %d", lightSensor.getRaw());
   Serial.printlnf("Pressure: %.2f", barSensor.getCompP(true));
   Serial.printlnf("Temperature: %.2f", barSensor.getCompT(false));
