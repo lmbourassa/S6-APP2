@@ -56,6 +56,11 @@ BlePeerDevice peer;
 
 // }
 
+void lightCallback(const uint8_t* data, size_t len, const BlePeerDevice& peer, void* context)
+{
+  Serial.println("Light value changed!");
+}
+
 void setup() {
   Serial.begin(9600);
   waitFor(Serial.isConnected, 30000);
@@ -103,6 +108,8 @@ void setup() {
             Serial.write("Found you!");
             peer = BLE.connect(scanResult[i].address());
 
+            lightCharacteristic.onDataReceived(lightCallback, &lightCharacteristic);
+
             break;
           }
         }
@@ -117,6 +124,8 @@ void loop() {
   delay(3000);
   
   data.lightData = lightSensor.getRaw();
+  lightCharacteristic.setValue(data.lightData);
+
   data.barPresData = barSensor.getCompP(true);
   data.barTempData = barSensor.getCompT(false);
   data.humData = humSensor.getHumidity(true);
