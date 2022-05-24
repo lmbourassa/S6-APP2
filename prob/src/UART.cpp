@@ -27,7 +27,16 @@ void UART::requestData()
         buffer[i++] = Serial1.read();
     }
 
-    data = (Data*)buffer;
+    Data* tempData = (Data*)buffer;
+
+    data->lightData = tempData->lightData;
+    data->barPresData = tempData->barPresData;
+    data->barTempData = tempData->barTempData;
+    data->humData = tempData->humData;
+    data->tempData = tempData->tempData;
+    data->windDirData = tempData->windDirData;
+    data->windSpeedData = tempData->windSpeedData;
+    data->rainData = tempData->rainData;
 }
 
 void UART::checkRequest()
