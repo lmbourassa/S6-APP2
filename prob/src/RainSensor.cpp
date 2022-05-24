@@ -11,7 +11,12 @@ RainSensor::RainSensor(int pin)
 float RainSensor::getRain()
 {
     unsigned long time = pulseIn(pin, HIGH) + pulseIn(pin, LOW);
-    Serial.printlnf("Time: %lu", time);
+    // Serial.printlnf("Time: %lu", time);
+
+    if(time == 0)
+    {
+        return 0;
+    }
 
     return (1000000.0/time)*0.2794;
 }

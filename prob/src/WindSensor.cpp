@@ -17,7 +17,7 @@ int WindSensor::getDir()
 float WindSensor::getSpeed()
 {
     unsigned long time = pulseIn(speedPin, HIGH) + pulseIn(speedPin, LOW);
-    Serial.printlnf("Time: %lu", time);
+    // Serial.printlnf("Time: %lu", time);
 
     if(time < 10000)
     {

@@ -243,14 +243,15 @@ void loop() {
 
   // if(uart.checkRequest())
   // {
-  //   Serial.printlnf("Light: %d", data.lightData);
-  //   Serial.printlnf("Pressure: %.2f", data.barPresData);
-  //   Serial.printlnf("Baro Temperature: %.2f", data.barTempData);
-  //   Serial.printlnf("Humidity: %.2f", data.humData);
-  //   Serial.printlnf("Temperature: %.2f", data.tempData);
-  //   Serial.printlnf("Wind Direction: %d", data.windDirData);
-  //   Serial.printlnf("Wind Speed: %.2f", data.windSpeedData);
-  //   Serial.printlnf("Rain: %.2f", data.rainData);
+    Serial.println("------------------------------------------------");
+    Serial.printlnf("Light: %d", weatherData.lightData);
+    Serial.printlnf("Pressure: %.2f", weatherData.barPresData);
+    Serial.printlnf("Baro Temperature: %.2f", weatherData.barTempData);
+    Serial.printlnf("Humidity: %.2f", weatherData.humData);
+    Serial.printlnf("Temperature: %.2f", weatherData.tempData);
+    Serial.printlnf("Wind Direction: %d", weatherData.windDirData);
+    Serial.printlnf("Wind Speed: %.2f", weatherData.windSpeedData);
+    Serial.printlnf("Rain: %.2f", weatherData.rainData);
   // }
 #else
   delay(5000);

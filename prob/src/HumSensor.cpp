@@ -23,7 +23,7 @@ unsigned long HumSensor::readBit()
 
 void HumSensor::readData()
 {
-    Serial.println("readData");
+    // Serial.println("readData");
     unsigned long bitTimes[40];
 
     noInterrupts();

@@ -62,16 +62,6 @@ void BarSensor::readCoefs()
     c20 = extend(c20, 0x00008000);
     c21 = extend(c21, 0x00008000);
     c30 = extend(c30, 0x00008000);
-
-    // c0 ^= -1;
-    // c1 ^= -1;
-    // c00 ^= -1;
-    // c10 ^= -1;
-    // c01 ^= -1;
-    // c11 ^= -1;
-    // c20 ^= -1;
-    // c21 ^= -1;
-    // c30 ^= -1;
 }
 
 void BarSensor::readData()
@@ -103,9 +93,6 @@ void BarSensor::readData()
 
     presData = extend(pres, 0x00800000);
     tempData = extend(temp, 0x00800000);
-
-    // presData = pres ^ -1;
-    // tempData = temp ^ -1;
 }
 
 long BarSensor::extend(long data, long mask)
@@ -115,7 +102,7 @@ long BarSensor::extend(long data, long mask)
         return data;
     }
 
-    Serial.printlnf("Data: 0x%lX, mask: 0x%lX", data, mask);
+    // Serial.printlnf("Data: 0x%lX, mask: 0x%lX", data, mask);
 
     if((data & mask) == mask)
     {
@@ -127,7 +114,7 @@ long BarSensor::extend(long data, long mask)
         }
     }
 
-    Serial.printlnf("Extended: 0x%lX = %ld", data, data);
+    // Serial.printlnf("Extended: 0x%lX = %ld", data, data);
 
     return data;
 }
