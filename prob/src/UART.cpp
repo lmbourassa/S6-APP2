@@ -4,7 +4,7 @@
 
 void UART::sendData()
 {
-    Serial1.write((byte*)&data, sizeof(Data));
+    Serial1.write((uint8_t*)data, sizeof(Data));
 }
 
 UART::UART(bool mode, Data* data)
@@ -20,7 +20,7 @@ void UART::requestData()
 
     while(!Serial1.available());
 
-    byte buffer[sizeof(Data)];
+    uint8_t buffer[sizeof(Data)];
 
     long i = 0;
     while(Serial1.available())
